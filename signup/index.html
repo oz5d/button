@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  </head>
+  <body>
+
+
+
+    <main>
+      <input type="submit" value="loading" id="button">
+    </main>
+
+    <!--firebase-->
+
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCVzNTpM4DqXvnnBlzgw39AInmUyVvHFto",
+        authDomain: "oz5dchat.firebaseapp.com",
+        projectId: "oz5dchat",
+        storageBucket: "oz5dchat.appspot.com",
+        messagingSenderId: "511766053931",
+        appId: "1:511766053931:web:aac4cc32c3dac5c02c966e",
+        measurementId: "G-CZVSQZKN95"
+      };
+    
+
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const analytics = getAnalytics(app);
+
+
+
+      import { doc, collection, addDoc, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js"; 
+      var ip = ""
+      await $.getJSON("https://api.ipify.org/?format=json", function(e) {
+          ip = e.ip
+      });
+      var clicks = 0
+      const docRef = await getDoc(doc(db, "users", ip))
+      if (docRef.exists()) {
+        clicks = Object.values(docRef.data())[0]
+        $("#button").val(clicks)
+      } else {
+        setDoc(doc(collection(db, "users"), ip))
+      }
+        $("#button").click(function() {
+          clicks++
+          $("#button").val(clicks)
+          setDoc(doc(collection(db, "users"), ip), {
+             clicks: clicks
+          });
+      })
+
+    </script>
+  </body>
+</html>

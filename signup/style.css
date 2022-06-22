@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  canvas {
+    display: block;
+  }
+  button {
+    width:150px;
+    height: 300px;
+    padding: 0;
+    border: 0;
+    position: absolute;
+  }
+  .button1 {
+    background-image: url(assets/eye.png);
+    color: white;
+    opacity: 90%;
+    left: calc(50% - 75px - 80px);
+    top:calc(50% - 150px);
+  }
+  .button2 {
+    background-image: url(assets/p5.png);
+    background-size: 400px 400px;
+    background-position: 275px;
+    color: white;
+    opacity: 90%;
+    left: calc(50% - 75px + 80px);
+    top:calc(50% - 150px);
+  }
