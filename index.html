@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   </head>
@@ -45,18 +44,22 @@
 
 
 
-      import { doc, collection, addDoc, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js"; 
+      import {doc, collection, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js"; 
       var ip = ""
       await $.getJSON("https://api.ipify.org/?format=json", function(e) {
           ip = e.ip
       });
       var clicks = 0
+
       const docRef = await getDoc(doc(db, "users", ip))
       if (docRef.exists()) {
         clicks = Object.values(docRef.data())[0]
         $("#button").val(clicks)
+        console.log(docRef.data())
       } else {
-        setDoc(doc(collection(db, "users"), ip))
+        setDoc(doc(collection(db, "users"), ip),{clicks: clicks})
+        $("#button").val(clicks)
+        console.log(docRef.data())
       }
         $("#button").click(function() {
           clicks++
